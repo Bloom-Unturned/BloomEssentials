@@ -1,6 +1,9 @@
 # See https://openmod.github.io/openmod-docs/devdoc/concepts/localization.html
 # You can delete this file if you do not need translations
 
-plugin_events:
-  plugin_start: "Hello World"
-  plugin_stop: "Good bye :("
+Raid:
+  State: "Raid is now <color=yellow>{State}</color>"
+  Wrong: "Argument must be either enable or disable"
+  Disabled: "Raid is disabled during these hours"
+  InfoDisabled: "Raid is only allowed between 6PM and 9PM GMT-3"
+  InfoEnabled: "Raid is now enabled until  9PM GMT-3"

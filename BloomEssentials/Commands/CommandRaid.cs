@@ -1,50 +1,30 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
-using OpenMod.API.Commands;
-using OpenMod.API.Eventing;
-using OpenMod.API.Plugins;
-using OpenMod.Unturned.Players.UI.Events;
-using OpenMod.Unturned.Players;
-using OpenMod.Unturned.Plugins;
-using OpenMod.Unturned.Users;
 using SDG.Unturned;
-using Steamworks;
-using OpenMod.Unturned.Building.Events;
-using System.Linq;
-using System.Drawing;
 using OpenMod.Core.Commands;
-using OpenMod.UnityEngine.Extensions;
-using SDG.Framework.Devkit;
-using System.Collections.Generic;
-using UnityEngine;
+using HathAntiRaid.API;
 
-namespace BloomEssentials.Commands
+namespace HathAntiRaid.Commands
 {
-    [Command("raid")]
+	[Command("raid")]
+    [CommandSyntax("raid <true/false>")]
     public class CommandRaid : OpenMod.Core.Commands.Command
     {
-        public CommandRaid(IServiceProvider serviceProvider) : base(serviceProvider)
+        private readonly IStringLocalizer m_stringLocalizer;
+        private readonly IRaidService m_raidService;
+        public CommandRaid(IServiceProvider serviceProvider, IStringLocalizer stringLocalizer, IRaidService raidService) : base(serviceProvider)
         {
+            m_stringLocalizer = stringLocalizer;
+            m_raidService = raidService;
 
-        }
+		}
 
         protected override async Task OnExecuteAsync()
         {
-            var enabling = await Context.Parameters.GetAsync<string>(0);
-
-            if(enabling == "enable")
-            {
-                RaidingService.RaidingService.Services.RaidingService.Instance.isRaiding = true;
-            } else if(enabling == "disable")
-            {
-                RaidingService.RaidingService.Services.RaidingService.Instance.isRaiding = false;
-            }
-
-            await UniTask.CompletedTask;
+            bool state = await Context.Parameters.GetAsync<bool>(0);
+            await m_raidService.ChangeRaid(state);
+			await Context.Actor.PrintMessageAsync(m_stringLocalizer["Raid:State", new { State = state.ToString()}]);
         }
     }
 }

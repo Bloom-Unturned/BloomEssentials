@@ -1,6 +1,8 @@
 ﻿using System;
+using HathAntiRaid.API;
 using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OpenMod.API.Plugins;
@@ -8,23 +10,21 @@ using OpenMod.Unturned.Plugins;
 
 // For more, visit https://openmod.github.io/openmod-docs/devdoc/guides/getting-started.html
 
-[assembly: PluginMetadata("BloomEssentials", DisplayName = "BloomEssentials")]
+[assembly: PluginMetadata("HathAntiRaid", DisplayName = "HathAntiRaid")]
 
-namespace BloomEssentials
+namespace HathAntiRaid
 {
-    public class BloomEssentials : OpenModUnturnedPlugin
+    public class HathAntiRaid : OpenModUnturnedPlugin
     {
-
-        public static BloomEssentials Instance { get; private set; }
-        public bool isRaiding { get; set; }
         private readonly IConfiguration m_Configuration;
         private readonly IStringLocalizer m_StringLocalizer;
-        private readonly ILogger<BloomEssentials> m_Logger;
+        private readonly ILogger<HathAntiRaid> m_Logger;
 
-        public BloomEssentials(
+        public HathAntiRaid(
             IConfiguration configuration,
             IStringLocalizer stringLocalizer,
-            ILogger<BloomEssentials> logger,
+            ILogger<HathAntiRaid> logger,
+            IRaidService service,
             IServiceProvider serviceProvider) : base(serviceProvider)
         {
             m_Configuration = configuration;

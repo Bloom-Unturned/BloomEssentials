@@ -3,5 +3,15 @@
 
 
 Blacklist:
-  placing:
-    - 490
+    
+#Items you shouln't be able to place while raid is disabled    
+  Placing:
+    - 1241
+
+#Barricades that can be damaged regardless of raid enabled  
+  Barricades:
+    - 1091
+
+#Structures that can be damaged regardless of raid enabled  
+  Structures:
+    - 369
